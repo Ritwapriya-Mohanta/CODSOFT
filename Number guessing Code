@@ -1,0 +1,58 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <limits>
+#include <vector>
+
+void guess_the_number() {
+    std::srand(std::time(0)); // Seed the random number generator
+
+    int lower_bound, upper_bound;
+    std::cout << "Welcome to the number guessing game!" << std::endl;
+    std::cout << "Please enter the lower bound of the range: ";
+    std::cin >> lower_bound;
+    std::cout << "Please enter the upper bound of the range: ";
+    std::cin >> upper_bound;
+
+    if (lower_bound > upper_bound) {
+        std::swap(lower_bound, upper_bound); // Ensure the lower bound is less than the upper bound
+    }
+
+    int number_to_guess = std::rand() % (upper_bound - lower_bound + 1) + lower_bound; // Generate a random number within the range
+    int user_guess = 0;
+
+    std::vector<std::string> congratulations = {
+        "Awesome! You nailed it!",
+        "Great job! You guessed it!",
+        "Fantastic! You got it right!",
+        "Bravo! That's the correct number!",
+        "Spot on! You guessed it correctly!"
+    };
+
+    std::cout << "I have selected a random number between " << lower_bound << " and " << upper_bound << "." << std::endl;
+    std::cout << "Try to guess the number." << std::endl;
+
+    while (user_guess != number_to_guess) {
+        std::cout << "Enter your guess: ";
+        std::cin >> user_guess;
+
+        // Checking for invalid input
+        if (std::cin.fail()) {
+            std::cin.clear(); // Clear the error flag
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Discard invalid input
+            std::cout << "Please enter a valid number." << std::endl;
+        } else if (user_guess < number_to_guess) {
+            std::cout << "Your guess is too low. Try again." << std::endl;
+        } else if (user_guess > number_to_guess) {
+            std::cout << "Your guess is too high. Try again." << std::endl;
+        } else {
+            int index = std::rand() % congratulations.size();
+            std::cout << congratulations[index] << std::endl;
+        }
+    }
+}
+
+int main() {
+    guess_the_number();
+    return 0;
+}
