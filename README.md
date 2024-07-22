@@ -1,0 +1,1 @@
+This is a  program that generates a random number and asks the user to guess it. By providing feedback on whether the guess is too high or too low until the user guesses the correct number. I have used std library functions to achieve the same.
